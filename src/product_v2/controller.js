@@ -2,9 +2,9 @@ const Product = require('./model');
 
 const productController = {
   getAllProductWithQuery: (req, res) => {
-    // const { name } = req.query;
+    const name = req.query.name || '';
 
-    Product.find()
+    Product.find({ name: { $regex: name, $options: 'i' } })
 
       .then((result) => res.send(result))
       .catch((error) => res.send(error));

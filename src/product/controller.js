@@ -3,9 +3,10 @@ const db = require('../config/mongodb');
 
 const productController = {
   getAllProductWithQuery: (req, res) => {
-    // const { name } = req.query;
+    const name = req.query.name || '';
+
     db.collection('product')
-      .find()
+      .find({ name: { $regex: name, $options: 'i' } })
       .toArray()
       .then((result) => res.send(result))
       .catch((error) => res.send(error));
